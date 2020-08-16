@@ -11,7 +11,7 @@ import {UsersReducer} from '../users/reducers';
 export default function createStore(history) {
   return reduxCreateStore(
     combineReducers({
-      fouter: connectRouter(history),
+      router: connectRouter(history),
       // products: ProductsReucers,
       users: UsersReducer,
     }),
