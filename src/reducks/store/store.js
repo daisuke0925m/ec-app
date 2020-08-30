@@ -3,22 +3,33 @@ import {
     combineReducers,
     applyMiddleware
 } from 'redux';
-import { connectRouter, routerMiddleware } from "connected-react-router"
-import thunk from 'redux-thunk'
+import { createLogger } from 'redux-logger'
+import thunk from 'redux-thunk';
+import { connectRouter, routerMiddleware } from 'connected-react-router'
 
-// import {ProdutsReducer} from '../products/reducers';
+// Import reducers
+import { ProductsReducer } from '../products/reducers';
 import { UsersReducer } from '../users/reducers';
 
+// createStoreの再定義 - historyを引数で受け、connected-react-routerの利用を抽象化
 export default function createStore(history) {
-    return reduxCreateStore(
+
+
+    const logger = createLogger({
+        collapsed: true,
+        diff: true
+    });
+
+    return reduxCreateStore( // オリジナル createStore の別名
         combineReducers({
+            products: ProductsReducer,
             router: connectRouter(history),
-            // products: ProductsReucers,
             users: UsersReducer,
         }),
         applyMiddleware(
+            logger,
             routerMiddleware(history),
             thunk
         )
-    )
+    );
 }
