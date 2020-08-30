@@ -4,16 +4,22 @@ import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { saveProduct } from '../reducks/products/operations'
 import ImageArea from '../components/Products/imageArea'
+import { useEffect } from 'react'
+import { db } from "../firebase/index"
 
 const ProductEdit = () => {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
+    let id = window.location.pathname.split('/product/edit')[1];
+    if (id !== "") {
+        id = id.split('/')[1]
+    }
 
     const [name, setName] = useState(""),
         [description, setDescription] = useState(""),
+        [images, setImages] = useState([]),
         [category, setCategory] = useState(""),
         [gender, setGender] = useState(""),
-        [price, setPrice] = useState(""),
-        [images, setImages] = useState([])
+        [price, setPrice] = useState("")
 
 
     const inputName = useCallback((event) => {
@@ -42,6 +48,20 @@ const ProductEdit = () => {
         { id: "female", name: "レディース" }
     ]
 
+    useEffect(() => {
+        if (id !== "") {
+            db.collection('products').doc(id).get().then(snapshot => {
+                const product = snapshot.data()
+                setName(product.name)
+                setDescription(product.description)
+                setImages(product.images)
+                setCategory(product.category)
+                setGender(product.gender)
+                setPrice(product.price)
+            })
+        }
+    }, [id])
+
     return (
         <section>
             <h2 className='u-text__headline u-text-center'>商品の登録・編集</h2>
@@ -64,7 +84,7 @@ const ProductEdit = () => {
                     label={"性別"} required={true} options={genders} select={setGender} value={gender}
                 />
                 <TextInput
-                    fullWidth={true} label={"商品名"} multiline={false} required={true}
+                    fullWidth={true} label={"価格"} multiline={false} required={true}
                     onChange={inputPrice} rows={1} value={price} type={"number"}
                 >
                 </TextInput>
@@ -72,7 +92,7 @@ const ProductEdit = () => {
                 <div className="center" />
                 <PrimaryButton
                     label={"商品情報を保存"}
-                    onClick={() => dispatch(saveProduct(name, description, gender, price, category, images))}
+                    onClick={() => dispatch(saveProduct(id, name, description, category, gender, price, images))}
                 />
             </div>
         </section>
