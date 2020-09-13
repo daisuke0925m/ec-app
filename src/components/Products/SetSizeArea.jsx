@@ -93,7 +93,7 @@ const SetSizeArea = (props) => {
                                         <IconButton className={classes.iconCell} onClick={() => editSize(i, item.size, item.quantity)}>
                                             <EditIcon />
                                         </IconButton>
-                                        <IconButton className={classes.iconCell} onClick={() => deleteSize(i, item.size, item.quantity)}>
+                                        <IconButton className={classes.iconCell} onClick={() => deleteSize(i)}>
                                             <DeleteIcon />
                                         </IconButton>
                                     </TableCell>
