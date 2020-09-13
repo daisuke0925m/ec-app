@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useMemo } from 'react';
 import { TextInput } from "../UIkit";
 import IconButton from "@material-ui/core/IconButton";
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -69,6 +69,10 @@ const SetSizeArea = (props) => {
         setSize(size)
         setQuantity(quantity)
     }
+
+    const memoIndex = useMemo(() => {
+        setIndex(props.sizes.length)
+    }, [props.sizes.length])
     return (
         <div>
             <TableContainer component={Paper}>
