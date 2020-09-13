@@ -6,6 +6,7 @@ import { saveProduct } from '../reducks/products/operations'
 import ImageArea from '../components/Products/imageArea'
 import { useEffect } from 'react'
 import { db } from "../firebase/index"
+import SetSizeArea from '../components/Products/SetSizeArea'
 
 const ProductEdit = () => {
     const dispatch = useDispatch();
@@ -19,7 +20,8 @@ const ProductEdit = () => {
         [images, setImages] = useState([]),
         [category, setCategory] = useState(""),
         [gender, setGender] = useState(""),
-        [price, setPrice] = useState("")
+        [price, setPrice] = useState(""),
+        [sizes, setSizes] = useState([])
 
 
     const inputName = useCallback((event) => {
@@ -88,6 +90,9 @@ const ProductEdit = () => {
                     onChange={inputPrice} rows={1} value={price} type={"number"}
                 >
                 </TextInput>
+                <div className="module-spacer--extra-extra-small" />
+                <SetSizeArea sizes={sizes} setSizes={setSizes} />
+                <div className="module-spacer--extra-extra-small" />
                 <div className="module-spacer--medium" />
                 <div className="center" />
                 <PrimaryButton
