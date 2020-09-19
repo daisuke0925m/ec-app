@@ -38,7 +38,6 @@ export const saveProduct = (id, name, description, category, gender, price, imag
             id = ref.id
             data.id = id
             data.created_at = timestamp
-            console.log(id)
         }
 
         return productsRef.doc(id).set(data, { merge: true })
