@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 import { db } from '../firebase/index'
 import { makeStyles } from "@material-ui/styles"
 import HTMLReactParser from 'html-react-parser'
-
+import { ImageSwiper } from "../components/Products"
 
 const useStyles = makeStyles((theme) => ({
     sliderBox: {
@@ -65,7 +65,7 @@ const ProductDetail = () => {
             {product && (
                 <div className="p-grid__row">
                     <div className={classes.sliderBox}>
-
+                        <ImageSwiper images={product.images} />
                     </div>
                     <div className={classes.detail}>
                         <h2 className="u-text__headline">{product.name}</h2>
