@@ -43,12 +43,24 @@ const useStyles = makeStyles((theme) =>
 const ClosableDrawer = (props) => {
     const classes = useStyles()
     const { container } = props
+    const dispatch = useDispatch()
 
     const [keyword, setKeyword] = useState("")
 
     const inputKeyword = useCallback((event) => {
         setKeyword(event.target.value)
     }, [setKeyword])
+
+    const selectMenu = (event, path) => {
+        dispatch(push(path))
+        props.onClose(event)
+    }
+
+    const menus = [
+        { func: selectMenu, label: "商品登録", icon: <AddCircleIcon />, id: "register", value: "/product/edit" },
+        { func: selectMenu, label: "注文履歴", icon: <HistoryIcon />, id: "history", value: "/order/history" },
+        { func: selectMenu, label: "プロフィール", icon: <PersonIcon />, id: "profile", value: "/user/mypage" },
+    ];
 
     return (
         <nav className={classes.drawer}>
@@ -73,7 +85,15 @@ const ClosableDrawer = (props) => {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button key="logout">
+                        {menus.map(menu => (
+                            <ListItem button key={menu.id} onClick={(e) => menu.func(e, menu.value)} >
+                                <ListItemIcon>
+                                    {menu.icon}
+                                </ListItemIcon>
+                                <ListItemText primary={menu.label} />
+                            </ListItem>
+                        ))}
+                        <ListItem button key="logout" onClick={() => dispatch(signOut())}>
                             <ListItemIcon>
                                 <ListItemIcon>
                                     <ExitToAppIcon />
