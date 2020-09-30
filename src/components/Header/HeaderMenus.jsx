@@ -11,10 +11,13 @@ import { db } from '../../firebase/index'
 import MenuIcon from "@material-ui/icons/Menu";
 
 const HeaderMenus = (props) => {
+    const selector = useSelector((state) => state);
+    let productsInCart = getProductsInCart(selector);
+
     return (
         <>
             <IconButton>
-                <Badge badgeContent={3} color="secondary">
+                <Badge badgeContent={productsInCart.length} color="secondary">
                     <ShoppingCartIcon />
                 </Badge>
             </IconButton>
