@@ -8,7 +8,6 @@ import TableContainer from "@material-ui/core/TableContainer";
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import { makeStyles } from "@material-ui/styles";
-import { Icon } from '@material-ui/core';
 
 const useStyles = makeStyles({
     iconCell: {
@@ -48,7 +47,7 @@ const SizeTable = (props) => {
                                         )}
                                 </TableCell>
                                 <TableCell className={classes.iconCell}>
-                                    <IconButton>
+                                    <IconButton onClick={() => props.addProduct(size.size)}>
                                         <FavoriteBorderIcon />
                                     </IconButton>
                                 </TableCell>

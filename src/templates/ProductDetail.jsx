@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { db, FirebaseTimestamp } from '../firebase/index'
 import { makeStyles } from "@material-ui/styles"
 import HTMLReactParser from 'html-react-parser'
@@ -52,8 +52,6 @@ const ProductDetail = () => {
     const path = selector.router.location.pathname
     const id = path.split('/product/')[1]
     const dispatch = useDispatch()
-
-
     const [product, setProduct] = useState(null)
 
     useEffect(() => {
@@ -75,7 +73,7 @@ const ProductDetail = () => {
             price: product.price,
             productId: product.id,
             quantity: 1,
-            size: selectedSize
+            size: selectedSize,
         }))
     }, [product])
 
