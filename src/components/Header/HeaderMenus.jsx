@@ -44,7 +44,7 @@ const HeaderMenus = (props) => {
             });
 
         return () => unsubscribe()
-    }, []);
+    }, [])
 
     return (
         <>
