@@ -19,6 +19,7 @@ const ProductEdit = () => {
         [description, setDescription] = useState(""),
         [images, setImages] = useState([]),
         [category, setCategory] = useState(""),
+        [categories, setCategories] = useState([]),
         [gender, setGender] = useState(""),
         [price, setPrice] = useState(""),
         [sizes, setSizes] = useState([])
@@ -37,12 +38,6 @@ const ProductEdit = () => {
     const inputPrice = useCallback((event) => {
         setPrice(event.target.value)
     }, [setPrice])
-
-    const categories = [
-        { id: "tops", name: "トップス" },
-        { id: "shirts", name: "シャツ" },
-        { id: "pants", name: "パンツ" },
-    ]
 
     const genders = [
         { id: "all", name: "すべて" },
@@ -65,6 +60,22 @@ const ProductEdit = () => {
         }
     }, [id])
 
+
+    useEffect(() => {
+        db.collection('categories').orderBy("order", "asc").get().then(snapshots => {
+            const list = []
+            snapshots.forEach(snapshot => {
+                const data = snapshot.data()
+                list.push({
+                    id: data.id,
+                    name: data.name
+                })
+            })
+            setCategories(list)
+        });
+    }, [])
+
+
     return (
         <section>
             <h2 className='u-text__headline u-text-center'>商品の登録・編集</h2>
@@ -81,7 +92,7 @@ const ProductEdit = () => {
                 >
                 </TextInput>
                 <SelectBox
-                    label={"カテゴリー"} required={true} options={categories} select={setCategory} value={category}
+                    label={"カテゴリー"} options={categories} required={true} select={setCategory} value={category}
                 />
                 <SelectBox
                     label={"性別"} required={true} options={genders} select={setGender} value={gender}
